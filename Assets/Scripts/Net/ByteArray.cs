@@ -98,10 +98,10 @@ public class ByteArray
     {
         if (length < 4) return 0;
         UInt32 ret = (UInt32)(
-            (bytes[3] << 24)|
-            (bytes[2] << 16)|
-            (bytes[1] << 8) |
-            bytes[0]);
+            (bytes[readIdx + 3] << 24)|
+            (bytes[readIdx + 2] << 16)|
+            (bytes[readIdx + 1] << 8) |
+            bytes[readIdx + 0]);
         readIdx += 4;
         CheckAndMoveBytes();
         return ret;
@@ -111,13 +111,13 @@ public class ByteArray
     {
         if (length < 8) return 0;
         UInt64 ret = (UInt64)(
-            (bytes[7] << 56) |
-            (bytes[6] << 48) |
-            (bytes[5] << 40) |
-            (bytes[4] << 32) |
-            (bytes[3] << 24) |
-            (bytes[2] << 16) |
-            (bytes[1] << 8) |
+            (bytes[readIdx + 7] << 56) |
+            (bytes[readIdx + 6] << 48) |
+            (bytes[readIdx + 5] << 40) |
+            (bytes[readIdx + 4] << 32) |
+            (bytes[readIdx + 3] << 24) |
+            (bytes[readIdx + 2] << 16) |
+            (bytes[readIdx + 1] << 8) |
             bytes[0]);
         readIdx += 8;
         CheckAndMoveBytes();
@@ -127,7 +127,7 @@ public class ByteArray
     public UInt16 ReadBigEndianInt16()
     {
         if (length < 2) return 0;
-        UInt16 ret = (UInt16)(bytes[1] | (bytes[0] << 8));
+        UInt16 ret = (UInt16)(bytes[readIdx + 1] | (bytes[readIdx + 0] << 8));
         readIdx += 2;
         CheckAndMoveBytes();
         return ret;
@@ -137,10 +137,10 @@ public class ByteArray
     {
         if (length < 4) return 0;
         UInt32 ret = (UInt32)(
-            (bytes[3] ) |
-            (bytes[2] << 8) |
-            (bytes[1] << 16) |
-            bytes[0] << 24);
+            (bytes[readIdx + 3] ) |
+            (bytes[readIdx + 2] << 8) |
+            (bytes[readIdx + 1] << 16) |
+            bytes[readIdx + 0] << 24);
         readIdx += 4;
         CheckAndMoveBytes();
         return ret;
@@ -150,55 +150,63 @@ public class ByteArray
     {
         if (length < 8) return 0;
         UInt64 ret = (UInt64)(
-            (bytes[7] ) |
-            (bytes[6] << 8 ) |
-            (bytes[5] << 16 ) |
-            (bytes[4] << 24 ) |
-            (bytes[3] << 32) |
-            (bytes[2] << 40) |
-            (bytes[1] << 48) |
-            bytes[0] << 56);
+            (bytes[readIdx + 7] ) |
+            (bytes[readIdx + 6] << 8 ) |
+            (bytes[readIdx + 5] << 16 ) |
+            (bytes[readIdx + 4] << 24 ) |
+            (bytes[readIdx + 3] << 32) |
+            (bytes[readIdx + 2] << 40) |
+            (bytes[readIdx + 1] << 48) |
+            bytes[readIdx + 0] << 56);
         readIdx += 8;
         CheckAndMoveBytes();
         return ret;
     }
-    public UInt64 ReadBigEndianInt64(int index)
+
+    public void WriteLittleEndianUInt(Byte[] b, UInt64 v)
     {
-        if (length < 8) return 0;
-        UInt64 ret = (UInt64)(
-            (bytes[7 + index]) |
-            (bytes[6 + index] << 8) |
-            (bytes[5 + index] << 16) |
-            (bytes[4 + index] << 24) |
-            (bytes[3 + index] << 32) |
-            (bytes[2 + index] << 40) |
-            (bytes[1 + index] << 48) |
-            bytes[0 + index] << 56);
-        readIdx += 8;
-        CheckAndMoveBytes();
-        return ret;
+        b[writeIdx + 7] = (byte)(v >> 56);
+        b[writeIdx + 6] = (byte)(v >> 48);
+        b[writeIdx + 5] = (byte)(v >> 40);
+        b[writeIdx + 4] = (byte)(v >> 32);
+        b[writeIdx + 3] = (byte)(v >> 24);
+        b[writeIdx + 2] = (byte)(v >> 16);
+        b[writeIdx + 1] = (byte)(v >> 8);
+        b[writeIdx + 0] = (byte)v;
     }
-    public void WriteBigEndianInt(Byte[] b, UInt64 v)
+    public void WriteLittleEndianUInt(Byte[] b, UInt32 v)
     {
-        b[0] = (byte)(v >> 56);
-        b[1] = (byte)(v >> 48);
-        b[2] = (byte)(v >> 40);
-        b[3] = (byte)(v >> 32);
-        b[4] = (byte)(v >> 24);
-        b[5] = (byte)(v >> 16);
-        b[6] = (byte)(v >> 8);
-        b[7] = (byte)v;
+        b[writeIdx + 3] = (byte)(v >> 24);
+        b[writeIdx + 2] = (byte)(v >> 16);
+        b[writeIdx + 1] = (byte)(v >> 8);
+        b[writeIdx + 0] = (byte)v;
     }
-    public void WriteBigEndianInt(Byte[] b, UInt32 v)
+    public void WriteLittleEndianUInt(Byte[] b, UInt16 v)
     {
-        b[0] = (byte)(v >> 24);
-        b[1] = (byte)(v >> 16);
-        b[2] = (byte)(v >> 8);
-        b[3] = (byte)v;
+        b[1] = (byte)(v >> 8);
+        b[0] = (byte)v;
     }
-    public void WriteBigEndianInt(Byte[] b, UInt16 v)
+    public void WriteBigEndianUInt(Byte[] b, UInt64 v)
     {
-        b[0] = (byte)(v >> 8);
-        b[1] = (byte)v;
+        b[writeIdx + 0] = (byte)(v >> 56);
+        b[writeIdx + 1] = (byte)(v >> 48);
+        b[writeIdx + 2] = (byte)(v >> 40);
+        b[writeIdx + 3] = (byte)(v >> 32);
+        b[writeIdx + 4] = (byte)(v >> 24);
+        b[writeIdx + 5] = (byte)(v >> 16);
+        b[writeIdx + 6] = (byte)(v >> 8);
+        b[writeIdx + 7] = (byte)v;
+    }
+    public void WriteBigEndianUInt(Byte[] b, UInt32 v)
+    {
+        b[writeIdx + 0] = (byte)(v >> 24);
+        b[writeIdx + 1] = (byte)(v >> 16);
+        b[writeIdx + 2] = (byte)(v >> 8);
+        b[writeIdx + 3] = (byte)v;
+    }
+    public void WriteBigEndianUInt(Byte[] b, UInt16 v)
+    {
+        b[writeIdx + 0] = (byte)(v >> 8);
+        b[writeIdx + 1] = (byte)v;
     }
 }

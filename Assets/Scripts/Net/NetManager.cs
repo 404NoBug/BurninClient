@@ -140,8 +140,7 @@ public class NetManager : MonoBehaviour
         //消息体
         if (readBuff.length < bodyLength - readBuff.readIdx) return;
         //消息处理
-        UInt64 msgId = readBuff.ReadBigEndianInt64(8);
-        Debug.Log("UnPack msgId = " + msgId);
+        UInt64 msgId = readBuff.ReadBigEndianInt64();
         byte[] msgDataByte = new byte[bodyLength - 8 - 8];
         readBuff.Read(msgDataByte, 0, bodyLength - 8 - 8);
         Message message;
