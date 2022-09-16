@@ -5,14 +5,14 @@ public class ByteArray
     //默认大小
     const int DEFAULT_SIZE = 1024;
     //初始大小
-    int initSize = 0;
+    int initSize;
     //缓冲区
     public byte[] bytes;
     //读写位置
-    public int readIdx = 0;
-    public int writeIdx = 0;
+    public int readIdx;
+    public int writeIdx;
     //容量
-    private int capacity = 0;
+    private int capacity;
     //剩余空间
     public int remain { get { return capacity - writeIdx; } }
     //数据长度

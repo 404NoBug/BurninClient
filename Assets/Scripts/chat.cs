@@ -15,7 +15,7 @@ public class chat : MonoBehaviour
     {
         text = "";
         OutField.text = text;
-        NetManager.AddListener("GS2C_SendChatMsg", OnChat);
+        NetManager.AddMsgListener("GS2C_SendChatMsg", OnChat);
     }
 
     void OnChat(byte[] msgData)

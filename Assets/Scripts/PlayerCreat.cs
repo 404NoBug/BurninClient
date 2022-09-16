@@ -8,14 +8,14 @@ using System;
 public class PlayerCreat : MonoBehaviour
 {
 
-    //ÈËÎïÄ£ĞÍÔ¤Éè
+    //ç©å®¶é¢„åˆ¶ä½“
     private GameObject humanPrefab;
-    //ÈËÎïÁĞ±í
+    //ç©å®¶åŸºç±»
     private BaseHuman myHuman;
     private Dictionary<string, BaseHuman> otherHumans;
     public void OnEnterMap()
     {
-        //Ìí¼ÓÒ»¸ö½ÇÉ«
+        //åˆ›å»ºä¸€ä¸ªç©å®¶
         GameObject ojb = (GameObject)Instantiate(humanPrefab);
         float x = UnityEngine.Random.Range(-5, 5);
         float z = UnityEngine.Random.Range(105, 115);
@@ -23,7 +23,7 @@ public class PlayerCreat : MonoBehaviour
         myHuman = ojb.AddComponent<CtrlHuman>();
         myHuman.desc = NetManager.GetDesc();
 
-        //·¢ËÍĞ­Òé
+        //åˆ›å»ºå¯¹åº”åæ ‡è§’åº¦
         Vector3 pos = myHuman.transform.position;
         Vector3 eul = myHuman.transform.eulerAngles;
         pos_info pos_Info = new pos_info()
@@ -49,10 +49,10 @@ public class PlayerCreat : MonoBehaviour
         {
             otherHumans = new Dictionary<string, BaseHuman>();
         }
-        //ÊÇ×Ô¼º
+        //ç©å®¶è‡ªå·±è·³è¿‡
         if (msg_enter.UId == NetManager.GetDesc() || otherHumans.ContainsKey(msg_enter.UId))
             return;
-        //Ìí¼ÓÒ»¸ö½ÇÉ«
+        //åˆ›å»ºä¸€ä¸ªç©å®¶
         GameObject ojb = (GameObject)Instantiate(humanPrefab);
         ojb.transform.position = new Vector3(msg_enter.Pos.X, 0, msg_enter.Pos.Y);
         ojb.transform.eulerAngles = new Vector3(0, msg_enter.Dir, 0);
@@ -65,7 +65,7 @@ public class PlayerCreat : MonoBehaviour
     {
         Debug.Log("PlayerMove");
         GS2C_PlayerMove msg_move = GS2C_PlayerMove.Parser.ParseFrom(msgData);
-        //ÒÆ¶¯
+        //æ²¡æœ‰æ­¤ç©å®¶ è·³è¿‡
         if (!otherHumans.ContainsKey(msg_move.UId)) return;
         BaseHuman baseHuman = otherHumans[msg_move.UId];
         Vector3 vector3 = new Vector3(msg_move.Pos.X, 0, msg_move.Pos.Y);
@@ -76,7 +76,7 @@ public class PlayerCreat : MonoBehaviour
     {
         Debug.Log("PlayerStopMove");
         GS2C_PlayerStopMove msg_stopMove = GS2C_PlayerStopMove.Parser.ParseFrom(msgData);
-        //ÒÆ¶¯
+        //ï¿½Æ¶ï¿½
         if (!otherHumans.ContainsKey(msg_stopMove.UId)) return;
         BaseHuman baseHuman = otherHumans[msg_stopMove.UId];
         baseHuman.StopMove(msg_stopMove.Dir);
@@ -102,10 +102,10 @@ public class PlayerCreat : MonoBehaviour
         }
         for (int i = 0; i < msg_enter.List.Count; i++)
         {
-            //ÊÇ×Ô¼º
+            //ç©å®¶è‡ªå·±è·³è¿‡
             if (msg_enter.List[i].UId == NetManager.GetDesc() || otherHumans.ContainsKey(msg_enter.List[i].UId))
                 continue;
-            //Ìí¼ÓÒ»¸ö½ÇÉ«
+            //åˆ›å»ºä¸€ä¸ªç©å®¶
             GameObject ojb = (GameObject)Instantiate(humanPrefab);
             ojb.transform.position = new Vector3(msg_enter.List[i].Pos.X, 0, msg_enter.List[i].Pos.Y);
             ojb.transform.eulerAngles = new Vector3(0, msg_enter.List[i].Dir, 0);
@@ -119,11 +119,11 @@ public class PlayerCreat : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        NetManager.AddListener("GS2C_EnterSence", Player_OnEnter);
-        NetManager.AddListener("GS2C_ONLinePlayerList", OtherPlayer_OnEnter);
-        NetManager.AddListener("GS2C_PlayerLeave", OtherPlayer_LeaveMap);
-        NetManager.AddListener("GS2C_PlayerMove", PlayerMove);
-        NetManager.AddListener("GS2C_PlayerStopMove", PlayerStopMove);
+        NetManager.AddMsgListener("GS2C_EnterSence", Player_OnEnter);
+        NetManager.AddMsgListener("GS2C_ONLinePlayerList", OtherPlayer_OnEnter);
+        NetManager.AddMsgListener("GS2C_PlayerLeave", OtherPlayer_LeaveMap);
+        NetManager.AddMsgListener("GS2C_PlayerMove", PlayerMove);
+        NetManager.AddMsgListener("GS2C_PlayerStopMove", PlayerStopMove);
         string fname = "Prefabs/Ethan";
         humanPrefab = Resources.Load<GameObject>(fname);
     }

@@ -24,19 +24,21 @@ namespace MessageId {
     static MessageIdReflection() {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
-            "ChVwcm90by9tZXNzYWdlSWQucHJvdG8SCW1lc3NhZ2VJZCrrAwoJTWVzc2Fn",
-            "ZUlkEggKBE5vbmUQABIWChBDMlNfQ3JlYXRlUGxheWVyENGGAxIWChBTMkNf",
-            "Q3JlYXRlUGxheWVyENKGAxIPCglDMlNfTG9naW4Q04YDEg8KCVMyQ19Mb2dp",
-            "bhDUhgMSFQoPQzJHU19FbnRlclNlbmNlEKGNBhIVCg9HUzJDX0VudGVyU2Vu",
-            "Y2UQoo0GEhUKD0MyR1NfUGxheWVyTW92ZRCjjQYSFQoPR1MyQ19QbGF5ZXJN",
-            "b3ZlEKSNBhIWChBDMkdTX1BsYXllckxlYXZlEKWNBhIWChBHUzJDX1BsYXll",
-            "ckxlYXZlEKaNBhIUCg5DMkdTX0FkZEZyaWVuZBCnjQYSFAoOR1MyQ19BZGRG",
-            "cmllbmQQqI0GEhQKDkMyR1NfRGVsRnJpZW5kEKmNBhIUCg5HUzJDX0RlbEZy",
-            "aWVuZBCqjQYSFgoQQzJHU19TZW5kQ2hhdE1zZxCrjQYSFgoQR1MyQ19TZW5k",
-            "Q2hhdE1zZxCsjQYSGwoVQzJHU19PTkxpbmVQbGF5ZXJMaXN0EK2NBhIbChVH",
-            "UzJDX09OTGluZVBsYXllckxpc3QQro0GEhkKE0MyR1NfUGxheWVyU3RvcE1v",
-            "dmUQr40GEhkKE0dTMkNfUGxheWVyU3RvcE1vdmUQsI0GQgxaCi9tZXNzYWdl",
-            "SWRiBnByb3RvMw=="));
+            "ChVwcm90by9tZXNzYWdlSWQucHJvdG8SCW1lc3NhZ2VJZCrdBAoJTWVzc2Fn",
+            "ZUlkEggKBE5vbmUQABIbChVDMlNfUmVnaXN0ZXJfQWNjb291bnQQ0YYDEhsK",
+            "FVMyQ19SZWdpc3Rlcl9BY2Nvb3VudBDShgMSFgoQQzJTX0NyZWF0ZVBsYXll",
+            "chDThgMSFgoQUzJDX0NyZWF0ZVBsYXllchDUhgMSDwoJQzJTX0xvZ2luENWG",
+            "AxIPCglTMkNfTG9naW4Q1oYDEg4KCFMyQ19LaWNrENeGAxISCgxDMkdTX01z",
+            "Z1BpbmcQgfEEEhIKDEMyR1NfTXNnUG9uZxCC8QQSFQoPQzJHU19FbnRlclNl",
+            "bmNlEKGNBhIVCg9HUzJDX0VudGVyU2VuY2UQoo0GEhUKD0MyR1NfUGxheWVy",
+            "TW92ZRCjjQYSFQoPR1MyQ19QbGF5ZXJNb3ZlEKSNBhIWChBDMkdTX1BsYXll",
+            "ckxlYXZlEKWNBhIWChBHUzJDX1BsYXllckxlYXZlEKaNBhIUCg5DMkdTX0Fk",
+            "ZEZyaWVuZBCnjQYSFAoOR1MyQ19BZGRGcmllbmQQqI0GEhQKDkMyR1NfRGVs",
+            "RnJpZW5kEKmNBhIUCg5HUzJDX0RlbEZyaWVuZBCqjQYSFgoQQzJHU19TZW5k",
+            "Q2hhdE1zZxCrjQYSFgoQR1MyQ19TZW5kQ2hhdE1zZxCsjQYSGwoVQzJHU19P",
+            "TkxpbmVQbGF5ZXJMaXN0EK2NBhIbChVHUzJDX09OTGluZVBsYXllckxpc3QQ",
+            "ro0GEhkKE0MyR1NfUGxheWVyU3RvcE1vdmUQr40GEhkKE0dTMkNfUGxheWVy",
+            "U3RvcE1vdmUQsI0GQgxaCi9tZXNzYWdlSWRiBnByb3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(new[] {typeof(global::MessageId.MessageId), }, null, null));
@@ -47,10 +49,18 @@ namespace MessageId {
   #region Enums
   public enum MessageId {
     [pbr::OriginalName("None")] None = 0,
-    [pbr::OriginalName("C2S_CreatePlayer")] C2SCreatePlayer = 50001,
-    [pbr::OriginalName("S2C_CreatePlayer")] S2CCreatePlayer = 50002,
-    [pbr::OriginalName("C2S_Login")] C2SLogin = 50003,
-    [pbr::OriginalName("S2C_Login")] S2CLogin = 50004,
+    [pbr::OriginalName("C2S_Register_Accoount")] C2SRegisterAccoount = 50001,
+    [pbr::OriginalName("S2C_Register_Accoount")] S2CRegisterAccoount = 50002,
+    [pbr::OriginalName("C2S_CreatePlayer")] C2SCreatePlayer = 50003,
+    [pbr::OriginalName("S2C_CreatePlayer")] S2CCreatePlayer = 50004,
+    [pbr::OriginalName("C2S_Login")] C2SLogin = 50005,
+    [pbr::OriginalName("S2C_Login")] S2CLogin = 50006,
+    [pbr::OriginalName("S2C_Kick")] S2CKick = 50007,
+    /// <summary>
+    ///heartbeat
+    /// </summary>
+    [pbr::OriginalName("C2GS_MsgPing")] C2GsMsgPing = 80001,
+    [pbr::OriginalName("C2GS_MsgPong")] C2GsMsgPong = 80002,
     /// <summary>
     ///player
     /// </summary>
