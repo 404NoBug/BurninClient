@@ -7,6 +7,11 @@ public class GameMain : MonoBehaviour
 {
     //玩家id
     public static string PlayerId = "";
+    void Awake()
+    {
+        DontDestroyOnLoad(gameObject);
+        this.gameObject.AddComponent<TimerMgr>();
+    }
     void Start()
     {
         //网络监听
@@ -16,6 +21,8 @@ public class GameMain : MonoBehaviour
         PanelManager.Init();
         //打开登录面板
         PanelManager.Open<LoginPanel>();
+
+        TimerMgr.Instance.Schedule(this.TimerTest, 3 , 3, 5);
     }
     void Update()
     {
@@ -31,5 +38,9 @@ public class GameMain : MonoBehaviour
     void OnMsgKick(byte[] msgData)
     {
         PanelManager.Open<TipPanel>("被踢下线");
+    }
+    
+    private void TimerTest(object param){
+       Debug.Log("TimerTest");
     }
 }

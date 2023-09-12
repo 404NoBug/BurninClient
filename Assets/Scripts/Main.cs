@@ -21,7 +21,7 @@ public class Main : MonoBehaviour
         NetManager.AddEventListener(NetManager.NetEvent.ConnectSucc, OnConnectSucc);
         NetManager.AddEventListener(NetManager.NetEvent.ConnectFail, OnConnectFail);
         NetManager.AddEventListener(NetManager.NetEvent.Close, OnConnectClose);
-        NetManager.Connect("127.0.0.1", 8888);
+        NetManager.Connect("0.0.0.0", 8888);
     }
     //连接成功回调
     void OnConnectSucc(string err)

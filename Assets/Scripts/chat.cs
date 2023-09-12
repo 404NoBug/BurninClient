@@ -41,9 +41,4 @@ public class chat : MonoBehaviour
         byte[] msgBytes = C2GS_SendChatMsg.ToByteArray();
         NetManager.Send(MessageId.MessageId.C2GsSendChatMsg, msgBytes);
     }
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

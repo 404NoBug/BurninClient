@@ -5,6 +5,7 @@ using PlayerMsg;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LoginPanel : BasePanel
 {
@@ -35,6 +36,7 @@ public class LoginPanel : BasePanel
         _regBtn.onClick.AddListener(OnRegClick);
         //网络协议监听
         NetManager.AddMsgListener("S2C_Login", OnMsgLogin);
+        NetManager.AddMsgListener("S2C_Register_Accoount", OnMsgRegister);
         //网络事件监听
         NetManager.AddEventListener(NetManager.NetEvent.ConnectSucc, OnConnectSucc);
         NetManager.AddEventListener(NetManager.NetEvent.ConnectFail, OnConnectFail);
@@ -89,16 +91,39 @@ public class LoginPanel : BasePanel
     public void OnMsgLogin(byte[] msgData)
     {
         S2C_Login msgLogin = S2C_Login.Parser.ParseFrom(msgData);
-        if (msgLogin.Ok)
+        if (msgLogin.Ok == 0)
         {
             //设置玩家Id
             GameMain.PlayerId = msgLogin.PlayerId.ToString();
             Debug.Log("登录成功");
             Close();
+            SceneManager.LoadScene("move");
+            //打开聊天面板
+            PanelManager.Open<ChatPanel>();
         }
         else
         {
             PanelManager.Open<TipPanel>("登录失败");
+        }
+    }
+    //收到注册协议
+    public void OnMsgRegister(byte[] msgData)
+    {
+        S2C_Register_Accoount msgRegister = S2C_Register_Accoount.Parser.ParseFrom(msgData);
+        if (msgRegister.RetCode == 0)
+        {
+            //设置玩家Id
+            GameMain.PlayerId = msgRegister.PlayerId;
+            Debug.Log("创建成功");
+            Close();
+        }
+        else if(msgRegister.RetCode == 1)
+        {
+            PanelManager.Open<TipPanel>("抱歉，这个账号已经存在");
+        }
+        else
+        {
+            PanelManager.Open<TipPanel>("服务器错误");
         }
     }
 }
